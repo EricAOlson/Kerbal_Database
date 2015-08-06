@@ -56,5 +56,74 @@ if ($usersqli->connect_errno) {
   	</table>
   	<p>And here is the Detailed Information:</p>
   	<div id="detail_div"></div>
+  	<p>And here you can add the basics stuff:</p>
+  	<div id="adds">
+  		<form onsubmit="add_kerbal();">
+  			<h3>Add a Kerbal</h3>
+  			<input type="hidden" name="req" value="add_kerbal"/>
+  			<div>
+    			<label for="name">Name:</label>
+    			<input type="text" name="name" id="add_kerbal_name"/>
+    		</div>
+    		<div>
+    			<label for="courage">Courage:</label>
+    			<select name="courage" id="add_kerbal_courage">
+    				<option value="1">1</option>
+    				<option value="2">2</option>
+    				<option value="3">3</option>
+    				<option value="4">4</option>
+    				<option value="5">5</option>
+    				<option value="6">6</option>
+    				<option value="7">7</option>
+    				<option value="8">8</option>
+    				<option value="9">9</option>
+    				<option value="10">10</option>
+    			</select>
+    		</div>
+    		<div>
+    			<label for="stupidity">Stupidity:</label>
+    			<select name="stupidity" id="add_kerbal_stupidity">
+    				<option value="1">1</option>
+    				<option value="2">2</option>
+    				<option value="3">3</option>
+    				<option value="4">4</option>
+    				<option value="5">5</option>
+    				<option value="6">6</option>
+    				<option value="7">7</option>
+    				<option value="8">8</option>
+    				<option value="9">9</option>
+    				<option value="10">10</option>
+    			</select>
+    		</div>
+    		<div>
+    			<input type="submit" />
+    		</div>
+    	</form>
+    	<form onsubmit="add_ship();">
+  			<h3>Add a Ship</h3>
+  			<input type="hidden" name="req" value="add_ship"/>
+  			<div>
+    			<label for="name">Name:</label>
+    			<input type="text" name="name" id="add_ship_name"/>
+    		</div>
+    		<div>
+    			<label for="seats">Seats:</label>
+    			<input type="number" name="seats" min="0" max="25"id="add_ship_seats"/>
+    		</div>
+    		<div>
+    			<label for="stages">Stages:</label>
+    			<input type="number" name="stages" min="0" max="50" id="add_ship_stages"/>
+    		</div>
+    		<div>
+    			<label for="lander">Lander:</label>
+    			<select name="lander" id="add_ship_lander">
+    				<option value="1">Yes</option>
+    				<option value="0">No</option>
+    			</select>
+    		</div>
+    		<div>
+    			<input type="submit" />
+    		</div>
+    	</form>
   </body>
 </html>

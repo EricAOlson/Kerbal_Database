@@ -304,7 +304,7 @@ function detail_ship(id){
       //Stages
       new_row = document.createElement("tr");
       new_cell = document.createElement("td");
-      text = document.createTextNode("Stages");
+      text = document.createTextNode("Lander");
       new_cell.appendChild(text);
       new_row.appendChild(new_cell);
       new_cell = document.createElement("td");
@@ -597,6 +597,52 @@ function detail_planet(id){
     }
   }
 }
+
+
+
+function add_kerbal(){
+	var name = document.getElementById("add_kerbal_name").value,
+	    courage = document.getElementById("add_kerbal_courage").value,
+	    stupidity = document.getElementById("add_kerbal_courage").value;
+
+	request = new XMLHttpRequest();
+    if (!request) {
+    	throw 'HttpRequest object not created.';
+    }
+	url = 'http://web.engr.oregonstate.edu/~olsoeric/CS340/data.php?req=add_kerbal&name=' + name + 
+	      '&courage=' + courage + '&stupidity=' + stupidity;
+	request.open('GET', url, true);
+	request.send();
+	request.onreadystatechange = function () {
+    	if (this.readyState === 4) {
+    		draw_toplist('kerbal');
+    	}
+    }
+}
+
+
+
+function add_ship(){
+	var name = document.getElementById("add_ship_name").value,
+	    seats = document.getElementById("add_ship_seats").value,
+	    stages = document.getElementById("add_ship_stages").value;
+	    lander = document.getElementById("add_ship_lander").value;
+
+	request = new XMLHttpRequest();
+    if (!request) {
+    	throw 'HttpRequest object not created.';
+    }
+	url = 'http://web.engr.oregonstate.edu/~olsoeric/CS340/data.php?req=add_ship&name=' + name + 
+	      '&seats=' + seats + '&stages=' + stages + '&lander=' + lander;
+	request.open('GET', url, true);
+	request.send();
+	request.onreadystatechange = function () {
+    	if (this.readyState === 4) {
+    		draw_toplist('ship');
+    	}
+    }
+}
+
 
 
 

@@ -30,6 +30,20 @@ if (isset($_GET['req']) && ($_GET['req'] == "kerbal_list")){
 	die();
 }
 
+
+//Adds a new kerbals to the database.
+if (isset($_GET['req']) && ($_GET['req'] == "add_kerbal")){
+	if (isset($_GET['name']) && isset($_GET['courage']) && isset($_GET['stupidity'])){
+		$stmt = $kerbalsqli->prepare("INSERT INTO Kerbal (name, courage, stupidity) 
+									  VALUES (?, ?, ?)");
+		$stmt->bind_param("sii", $_GET['name'], $_GET['courage'], $_GET['stupidity']);
+		$stmt->execute();
+		$stmt->close();
+	}
+	die();
+}
+
+
 //Retrieves an array of ships from the database.
 if (isset($_GET['req']) && ($_GET['req'] == "ship_list")){
 	$ships = array();
@@ -46,6 +60,19 @@ if (isset($_GET['req']) && ($_GET['req'] == "ship_list")){
 	}
 	$stmt->close();
 	echo json_encode($ships);  //Successful return
+	die();
+}
+
+
+//Adds a new ships to the database.
+if (isset($_GET['req']) && ($_GET['req'] == "add_ship")){
+	if (isset($_GET['name']) && isset($_GET['seats']) && isset($_GET['stages']) && isset($_GET['lander'])){
+		$stmt = $kerbalsqli->prepare("INSERT INTO Ship (name, seats, stages, lander) 
+									  VALUES (?, ?, ?, ?)");
+		$stmt->bind_param("siii", $_GET['name'], $_GET['seats'], $_GET['stages'], $_GET['lander']);
+		$stmt->execute();
+		$stmt->close();
+	}
 	die();
 }
 
@@ -215,6 +242,8 @@ if (isset($_GET['req']) && ($_GET['req'] == "detail_ship")){
 		$lander_out = NULL;
 		$stmt->bind_result($name_out, $seats_out, $stages_out, $lander_out);
 		while($stmt->fetch()){
+			if ($lander_out == 1) {$lander_out = "Yes";}
+			else {$lander_out = "No";}
 			$temp = array(
 				"name" => $name_out,
 				"seats" => $seats_out,
