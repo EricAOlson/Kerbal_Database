@@ -131,7 +131,7 @@ function detail_kerbal(id){
       new_cell.appendChild(text);
       new_row.appendChild(new_cell);
       new_table.appendChild(new_row);
-      new_div.appendChild(new_table)
+      new_div.appendChild(new_table);
 
       //List Ships Ridden
       new_table = document.createElement("table");
@@ -236,7 +236,7 @@ function detail_ship(id){
       url,
       response = [];
 
-  //Makes request to SQL for Kerbal Details.
+  //Makes request to SQL for Ship Details.
   request = new XMLHttpRequest();
   if (!request) {
     throw 'HttpRequest object not created.';
@@ -312,7 +312,7 @@ function detail_ship(id){
       new_cell.appendChild(text);
       new_row.appendChild(new_cell);
       new_table.appendChild(new_row);
-      new_div.appendChild(new_table)
+      new_div.appendChild(new_table);
 
       //List Kerbals Piloted
       new_table = document.createElement("table");
@@ -404,6 +404,374 @@ function detail_ship(id){
     }
   }
 }
+
+
+
+//Detailed Form Population for Planets
+function detail_planet(id){
+  var new_div = document.getElementById("detail_div"),
+      temp_table,
+      new_table,
+      new_row,
+      new_cell,
+      text,
+      url,
+      response = [];
+
+  //Makes request to SQL for Planet Details.
+  request = new XMLHttpRequest();
+  if (!request) {
+    throw 'HttpRequest object not created.';
+  }
+  url = 'http://web.engr.oregonstate.edu/~olsoeric/CS340/data.php?req=detail_planet&planet=' + id;
+  request.open('GET', url, true);
+  request.send();
+  request.onreadystatechange = function () {
+    if (this.readyState === 4) {
+      response = JSON.parse(this.responseText);
+
+      //Deletes any current data in detail section.
+      while(new_div.childNodes.length > 0){
+        temp_table = new_div.children[0];
+        temp_table.parentNode.removeChild(temp_table);
+      }
+
+      //Provides Planet Data
+      new_table = document.createElement("table");
+      new_table.setAttribute("class", "detail_list");
+      //Headers
+      new_row = document.createElement("thead");
+      new_cell = document.createElement("td");
+      text = document.createTextNode("Attribute:");
+      new_cell.appendChild(text);
+      new_row.appendChild(new_cell);
+      new_cell = document.createElement("td");
+      text = document.createTextNode("Value:");
+      new_cell.appendChild(text);
+      new_row.appendChild(new_cell);
+      new_table.appendChild(new_row);
+      //Name
+      new_row = document.createElement("tr");
+      new_cell = document.createElement("td");
+      text = document.createTextNode("Name");
+      new_cell.appendChild(text);
+      new_row.appendChild(new_cell);
+      new_cell = document.createElement("td");
+      text = document.createTextNode(response[0][0].name);
+      new_cell.appendChild(text);
+      new_row.appendChild(new_cell);
+      new_table.appendChild(new_row);
+      //Radius
+      new_row = document.createElement("tr");
+      new_cell = document.createElement("td");
+      text = document.createTextNode("Radius");
+      new_cell.appendChild(text);
+      new_row.appendChild(new_cell);
+      new_cell = document.createElement("td");
+      text = document.createTextNode(response[0][0].radius + "km");
+      new_cell.appendChild(text);
+      new_row.appendChild(new_cell);
+      new_table.appendChild(new_row);
+      //Inclination
+      new_row = document.createElement("tr");
+      new_cell = document.createElement("td");
+      text = document.createTextNode("Inclination");
+      new_cell.appendChild(text);
+      new_row.appendChild(new_cell);
+      new_cell = document.createElement("td");
+      text = document.createTextNode(response[0][0].inclination + "deg");
+      new_cell.appendChild(text);
+      new_row.appendChild(new_cell);
+      new_table.appendChild(new_row);
+      //gravity
+      new_row = document.createElement("tr");
+      new_cell = document.createElement("td");
+      text = document.createTextNode("Gravity");
+      new_cell.appendChild(text);
+      new_row.appendChild(new_cell);
+      new_cell = document.createElement("td");
+      text = document.createTextNode(response[0][0].gravity + "m/s^2");
+      new_cell.appendChild(text);
+      new_row.appendChild(new_cell);
+      new_table.appendChild(new_row);
+      //atmosphere
+      new_row = document.createElement("tr");
+      new_cell = document.createElement("td");
+      text = document.createTextNode("Atmosphere");
+      new_cell.appendChild(text);
+      new_row.appendChild(new_cell);
+      new_cell = document.createElement("td");
+      text = document.createTextNode(response[0][0].atmosphere);
+      new_cell.appendChild(text);
+      new_row.appendChild(new_cell);
+      new_table.appendChild(new_row);
+      new_div.appendChild(new_table);
+
+      //List Kerbals Visited
+      new_table = document.createElement("table");
+      new_table.setAttribute("class", "detail_list");
+      //Headers
+      new_row = document.createElement("thead");
+      new_cell = document.createElement("td");
+      text = document.createTextNode("Visited By:");
+      new_cell.appendChild(text);
+      new_row.appendChild(new_cell);
+      new_cell = document.createElement("td");
+      new_table.appendChild(new_row);
+      //Kerbals
+      for (x = 0; x < response[1].length; x++){
+        new_row = document.createElement("tr");
+        new_cell = document.createElement("td");
+        text = document.createTextNode(response[1][x].name);
+        new_cell.appendChild(text);
+        new_row.appendChild(new_cell);
+        new_table.appendChild(new_row);
+      }
+      new_div.appendChild(new_table);
+
+      //List Ships Arrived
+      new_table = document.createElement("table");
+      new_table.setAttribute("class", "detail_list");
+      //Headers
+      new_row = document.createElement("thead");
+      new_cell = document.createElement("td");
+      text = document.createTextNode("Ships Arrived:");
+      new_cell.appendChild(text);
+      new_row.appendChild(new_cell);
+      new_cell = document.createElement("td");
+      new_table.appendChild(new_row);
+      //Ships
+      for (x = 0; x < response[2].length; x++){
+        new_row = document.createElement("tr");
+        new_cell = document.createElement("td");
+        text = document.createTextNode(response[2][x].name);
+        new_cell.appendChild(text);
+        new_row.appendChild(new_cell);
+        new_table.appendChild(new_row);
+      }
+      new_div.appendChild(new_table);
+
+      //List Missions Assigned
+      new_table = document.createElement("table");
+      new_table.setAttribute("class", "detail_list");
+      //Headers
+      new_row = document.createElement("thead");
+      new_cell = document.createElement("td");
+      text = document.createTextNode("Missions:");
+      new_cell.appendChild(text);
+      new_row.appendChild(new_cell);
+      new_cell = document.createElement("td");
+      new_table.appendChild(new_row);
+      //Missions
+      for (x = 0; x < response[3].length; x++){
+        new_row = document.createElement("tr");
+        new_cell = document.createElement("td");
+        text = document.createTextNode(response[3][x].name);
+        new_cell.appendChild(text);
+        new_row.appendChild(new_cell);
+        new_table.appendChild(new_row);
+      }
+      new_div.appendChild(new_table);
+
+      //List Moons
+      new_table = document.createElement("table");
+      new_table.setAttribute("class", "detail_list");
+      //Headers
+      new_row = document.createElement("thead");
+      new_cell = document.createElement("td");
+      text = document.createTextNode("Moons:");
+      new_cell.appendChild(text);
+      new_row.appendChild(new_cell);
+      new_cell = document.createElement("td");
+      new_table.appendChild(new_row);
+      //Moons
+      for (x = 0; x < response[4].length; x++){
+        new_row = document.createElement("tr");
+        new_cell = document.createElement("td");
+        text = document.createTextNode(response[4][x].name);
+        new_cell.appendChild(text);
+        new_row.appendChild(new_cell);
+        new_table.appendChild(new_row);
+      }
+      new_div.appendChild(new_table);
+    }
+  }
+}
+
+
+
+//Detailed Form Population for Moons
+function detail_moon(id){
+  var new_div = document.getElementById("detail_div"),
+      temp_table,
+      new_table,
+      new_row,
+      new_cell,
+      text,
+      url,
+      response = [];
+
+  //Makes request to SQL for Planet Details.
+  request = new XMLHttpRequest();
+  if (!request) {
+    throw 'HttpRequest object not created.';
+  }
+  url = 'http://web.engr.oregonstate.edu/~olsoeric/CS340/data.php?req=detail_moon&moon=' + id;
+  request.open('GET', url, true);
+  request.send();
+  request.onreadystatechange = function () {
+    if (this.readyState === 4) {
+      response = JSON.parse(this.responseText);
+
+      //Deletes any current data in detail section.
+      while(new_div.childNodes.length > 0){
+        temp_table = new_div.children[0];
+        temp_table.parentNode.removeChild(temp_table);
+      }
+
+      //Provides Planet Data
+      new_table = document.createElement("table");
+      new_table.setAttribute("class", "detail_list");
+      //Headers
+      new_row = document.createElement("thead");
+      new_cell = document.createElement("td");
+      text = document.createTextNode("Attribute:");
+      new_cell.appendChild(text);
+      new_row.appendChild(new_cell);
+      new_cell = document.createElement("td");
+      text = document.createTextNode("Value:");
+      new_cell.appendChild(text);
+      new_row.appendChild(new_cell);
+      new_table.appendChild(new_row);
+      //Name
+      new_row = document.createElement("tr");
+      new_cell = document.createElement("td");
+      text = document.createTextNode("Name");
+      new_cell.appendChild(text);
+      new_row.appendChild(new_cell);
+      new_cell = document.createElement("td");
+      text = document.createTextNode(response[0][0].name);
+      new_cell.appendChild(text);
+      new_row.appendChild(new_cell);
+      new_table.appendChild(new_row);
+      //Radius
+      new_row = document.createElement("tr");
+      new_cell = document.createElement("td");
+      text = document.createTextNode("Radius");
+      new_cell.appendChild(text);
+      new_row.appendChild(new_cell);
+      new_cell = document.createElement("td");
+      text = document.createTextNode(response[0][0].radius + "km");
+      new_cell.appendChild(text);
+      new_row.appendChild(new_cell);
+      new_table.appendChild(new_row);
+      //gravity
+      new_row = document.createElement("tr");
+      new_cell = document.createElement("td");
+      text = document.createTextNode("Gravity");
+      new_cell.appendChild(text);
+      new_row.appendChild(new_cell);
+      new_cell = document.createElement("td");
+      text = document.createTextNode(response[0][0].gravity + "m/s^2");
+      new_cell.appendChild(text);
+      new_row.appendChild(new_cell);
+      new_table.appendChild(new_row);
+      //atmosphere
+      new_row = document.createElement("tr");
+      new_cell = document.createElement("td");
+      text = document.createTextNode("Atmosphere");
+      new_cell.appendChild(text);
+      new_row.appendChild(new_cell);
+      new_cell = document.createElement("td");
+      text = document.createTextNode(response[0][0].atmosphere);
+      new_cell.appendChild(text);
+      new_row.appendChild(new_cell);
+      new_table.appendChild(new_row);
+      //orbits
+      new_row = document.createElement("tr");
+      new_cell = document.createElement("td");
+      text = document.createTextNode("Orbits");
+      new_cell.appendChild(text);
+      new_row.appendChild(new_cell);
+      new_cell = document.createElement("td");
+      text = document.createTextNode(response[0][0].orbits);
+      new_cell.appendChild(text);
+      new_row.appendChild(new_cell);
+      new_table.appendChild(new_row);
+      new_div.appendChild(new_table);
+      new_div.appendChild(new_table);
+
+      //List Kerbals Visited
+      new_table = document.createElement("table");
+      new_table.setAttribute("class", "detail_list");
+      //Headers
+      new_row = document.createElement("thead");
+      new_cell = document.createElement("td");
+      text = document.createTextNode("Visited By:");
+      new_cell.appendChild(text);
+      new_row.appendChild(new_cell);
+      new_cell = document.createElement("td");
+      new_table.appendChild(new_row);
+      //Kerbals
+      for (x = 0; x < response[1].length; x++){
+        new_row = document.createElement("tr");
+        new_cell = document.createElement("td");
+        text = document.createTextNode(response[1][x].name);
+        new_cell.appendChild(text);
+        new_row.appendChild(new_cell);
+        new_table.appendChild(new_row);
+      }
+      new_div.appendChild(new_table);
+
+      //List Ships Arrived
+      new_table = document.createElement("table");
+      new_table.setAttribute("class", "detail_list");
+      //Headers
+      new_row = document.createElement("thead");
+      new_cell = document.createElement("td");
+      text = document.createTextNode("Ships Arrived:");
+      new_cell.appendChild(text);
+      new_row.appendChild(new_cell);
+      new_cell = document.createElement("td");
+      new_table.appendChild(new_row);
+      //Ships
+      for (x = 0; x < response[2].length; x++){
+        new_row = document.createElement("tr");
+        new_cell = document.createElement("td");
+        text = document.createTextNode(response[2][x].name);
+        new_cell.appendChild(text);
+        new_row.appendChild(new_cell);
+        new_table.appendChild(new_row);
+      }
+      new_div.appendChild(new_table);
+
+      //List Missions Assigned
+      new_table = document.createElement("table");
+      new_table.setAttribute("class", "detail_list");
+      //Headers
+      new_row = document.createElement("thead");
+      new_cell = document.createElement("td");
+      text = document.createTextNode("Missions:");
+      new_cell.appendChild(text);
+      new_row.appendChild(new_cell);
+      new_cell = document.createElement("td");
+      new_table.appendChild(new_row);
+      //Missions
+      for (x = 0; x < response[3].length; x++){
+        new_row = document.createElement("tr");
+        new_cell = document.createElement("td");
+        text = document.createTextNode(response[3][x].name);
+        new_cell.appendChild(text);
+        new_row.appendChild(new_cell);
+        new_table.appendChild(new_row);
+      }
+      new_div.appendChild(new_table);
+    }
+  }
+}
+
+
+
 
 
 window.onload = function() {

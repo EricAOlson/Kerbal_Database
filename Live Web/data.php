@@ -175,8 +175,8 @@ if (isset($_GET['req']) && ($_GET['req'] == "detail_kerbal")){
 			 						  FROM Kerbal K
 			                          INNER JOIN Kerbal_Mission KM ON K.id = KM.kerbal_id
 			                          INNER JOIN Mission M ON KM.mission_id = M.id
-			                          INNER JOIN Mission_Planet MP ON M.id = MP.mission_id
-			                          INNER JOIN Moon ON MP.planet_id = Moon.id
+			                          INNER JOIN Mission_Moon MM ON M.id = MM.mission_id
+			                          INNER JOIN Moon ON MM.moon_id = Moon.id
 			                          WHERE K.id = ?");
 		$stmt->bind_param("i", $_GET['kerbal']);
 		$stmt->execute();
@@ -281,8 +281,8 @@ if (isset($_GET['req']) && ($_GET['req'] == "detail_ship")){
 		$stmt = $kerbalsqli->prepare("SELECT DISTINCT Moon.name 
 			 						  FROM Ship S
 			                          INNER JOIN Mission M ON S.id = M.ship_id
-			                          INNER JOIN Mission_Planet MP ON M.id = MP.mission_id
-			                          INNER JOIN Moon ON MP.planet_id = Moon.id
+			                          INNER JOIN Mission_Moon MM ON M.id = MM.mission_id
+			                          INNER JOIN Moon ON MM.moon_id = Moon.id
 			                          WHERE S.id = ?");
 		$stmt->bind_param("i", $_GET['ship']);
 		$stmt->execute();
@@ -298,5 +298,212 @@ if (isset($_GET['req']) && ($_GET['req'] == "detail_ship")){
 	echo json_encode($return);  //Successful return
 	die();
   }
+}
+
+
+//Retrieves an array of detailed information for a Planet.
+if (isset($_GET['req']) && ($_GET['req'] == "detail_planet")){
+	if(isset($_GET['planet'])){
+		$return = array();  //Master Array to return.
+		$P_detail = array();  //Array for Planet details.
+		$K_list = array();  //Array for Kerbals Visited.
+		$S_list = array();  //Array for Ships Visited.
+		$Mi_list = array();  //Array for Missions that Targeted.
+		$Mo_list = array();  //Array for Moons.
+
+		//Fetch Planet detail
+		$stmt = $kerbalsqli->prepare("SELECT name, radius, inclination, gravity, atmosphere 
+			                          FROM Planet WHERE id=?");
+		$stmt->bind_param("i", $_GET['planet']);
+		$stmt->execute();
+		$name_out = NULL;
+		$radius_out = NULL;
+		$inclination_out = NULL;
+		$gravity_out = NULL;
+		$atmosphere_out = NULL;
+		$stmt->bind_result($name_out, $radius_out, $inclination_out, $gravity_out, $atmosphere_out);
+		while($stmt->fetch()){
+			if ($atmosphere_out == 1) {$atmosphere_out = "Present";}
+			else {$atmosphere_out = "None";}
+			$temp = array(
+				"name" => $name_out,
+				"radius" => round($radius_out, 4),
+				"inclination" => round($inclination_out, 4),
+				"gravity" => round($gravity_out, 4),
+				"atmosphere" => $atmosphere_out);
+			array_push($P_detail, $temp);
+		}
+		array_push($return, $P_detail);
+		$stmt->close();
+
+		//Fetch Kerbals Piloted
+		$stmt = $kerbalsqli->prepare("SELECT DISTINCT K.name 
+			 						  FROM Planet P
+			                          INNER JOIN Mission_Planet MP ON P.id = MP.planet_id
+			                          INNER JOIN Mission M ON MP.mission_id = M.id
+			                          INNER JOIN Kerbal_Mission KM ON M.id = KM.mission_id
+			                          INNER JOIN Kerbal K ON KM.kerbal_id = K.id
+			                          WHERE P.id = ?");
+		$stmt->bind_param("i", $_GET['planet']);
+		$stmt->execute();
+		$name_out = NULL;
+		$stmt->bind_result($name_out);
+		while($stmt->fetch()){
+			$temp = array("name" => $name_out);
+			array_push($K_list, $temp);
+		}
+		array_push($return, $K_list);
+		$stmt->close();
+
+		//Fetch Ships that have Visited
+		$stmt = $kerbalsqli->prepare("SELECT S.name
+									  FROM Planet P
+			                          INNER JOIN Mission_Planet MP ON P.id = MP.planet_id
+			                          INNER JOIN Mission M ON MP.mission_id = M.id
+			                          INNER JOIN Ship S ON M.ship_id = S.id
+			                          WHERE P.id = ?");
+		$stmt->bind_param("i", $_GET['planet']);
+		$stmt->execute();
+		$name_out = NULL;
+		$stmt->bind_result($name_out);
+		while($stmt->fetch()){
+			$temp = array("name" => $name_out);
+			array_push($S_list, $temp);
+		}
+		array_push($return, $S_list);
+		$stmt->close();
+
+		//Fetch Missions Assigned
+		$stmt = $kerbalsqli->prepare("SELECT DISTINCT M.name 
+			 						  FROM Planet P
+			                          INNER JOIN Mission_Planet MP ON P.id = MP.planet_id
+			                          INNER JOIN Mission M ON MP.mission_id = M.id
+			                          WHERE P.id = ?");
+		$stmt->bind_param("i", $_GET['planet']);
+		$stmt->execute();
+		$name_out = NULL;
+		$stmt->bind_result($name_out);
+		while($stmt->fetch()){
+			$temp = array("name" => $name_out);
+			array_push($Mi_list, $temp);
+		}
+		array_push($return, $Mi_list);
+		$stmt->close();
+
+		//Fetch Moons
+		$stmt = $kerbalsqli->prepare("SELECT DISTINCT Moon.name 
+			                          FROM Planet P
+			                          INNER JOIN Moon ON P.id = Moon.orbits
+			                          WHERE P.id = ?");
+		$stmt->bind_param("i", $_GET['planet']);
+		$stmt->execute();
+		$name_out = NULL;
+		$stmt->bind_result($name_out);
+		while($stmt->fetch()){
+			$temp = array("name" => $name_out);
+			array_push($Mo_list, $temp);
+		}
+		array_push($return, $Mo_list);
+		$stmt->close();
+
+	echo json_encode($return);  //Successful return
+	die();
+    }
+}
+
+
+//Retrieves an array of detailed information for a Planet.
+if (isset($_GET['req']) && ($_GET['req'] == "detail_moon")){
+	if(isset($_GET['moon'])){
+		$return = array();  //Master Array to return.
+		$Mo_detail = array();  //Array for Planet details.
+		$K_list = array();  //Array for Kerbals Visited.
+		$S_list = array();  //Array for Ships Visited.
+		$Mi_list = array();  //Array for Missions that Targeted.
+		
+		//Fetch Moon detail
+		$stmt = $kerbalsqli->prepare("SELECT M.name, M.radius, M.gravity, M.atmosphere, P.name
+			                          FROM Moon M
+			                          INNER JOIN Planet P ON M.orbits = P.id
+			                          WHERE M.id=?");
+		$stmt->bind_param("i", $_GET['moon']);
+		$stmt->execute();
+		$name_out = NULL;
+		$radius_out = NULL;
+		$gravity_out = NULL;
+		$atmosphere_out = NULL;
+		$orbits_out = NULL;
+		$stmt->bind_result($name_out, $radius_out, $gravity_out, $atmosphere_out, $orbits_out);
+		while($stmt->fetch()){
+			if ($atmosphere_out == 1) {$atmosphere_out = "Present";}
+			else {$atmosphere_out = "None";}
+			$temp = array(
+				"name" => $name_out,
+				"radius" => round($radius_out, 4),
+				"gravity" => round($gravity_out, 4),
+				"atmosphere" => $atmosphere_out,
+				"orbits" => $orbits_out);
+			array_push($Mo_detail, $temp);
+		}
+		array_push($return, $Mo_detail);
+		$stmt->close();
+
+		//Fetch Kerbals Visited
+		$stmt = $kerbalsqli->prepare("SELECT DISTINCT K.name 
+			 						  FROM Moon
+			                          INNER JOIN Mission_Moon MM ON Moon.id = MM.moon_id
+			                          INNER JOIN Mission M ON MM.mission_id = M.id
+			                          INNER JOIN Kerbal_Mission KM ON M.id = KM.mission_id
+			                          INNER JOIN Kerbal K ON KM.kerbal_id = K.id
+			                          WHERE Moon.id = ?");
+		$stmt->bind_param("i", $_GET['moon']);
+		$stmt->execute();
+		$name_out = NULL;
+		$stmt->bind_result($name_out);
+		while($stmt->fetch()){
+			$temp = array("name" => $name_out);
+			array_push($K_list, $temp);
+		}
+		array_push($return, $K_list);
+		$stmt->close();
+
+		//Fetch Ships that have Visited
+		$stmt = $kerbalsqli->prepare("SELECT S.name
+									  FROM Moon
+			                          INNER JOIN Mission_Moon MM ON Moon.id = MM.moon_id
+			                          INNER JOIN Mission M ON MM.mission_id = M.id
+			                          INNER JOIN Ship S ON M.ship_id = S.id
+			                          WHERE Moon.id = ?");
+		$stmt->bind_param("i", $_GET['moon']);
+		$stmt->execute();
+		$name_out = NULL;
+		$stmt->bind_result($name_out);
+		while($stmt->fetch()){
+			$temp = array("name" => $name_out);
+			array_push($S_list, $temp);
+		}
+		array_push($return, $S_list);
+		$stmt->close();
+
+		//Fetch Missions Assigned
+		$stmt = $kerbalsqli->prepare("SELECT DISTINCT M.name 
+			 						  FROM Moon
+			                          INNER JOIN Mission_Moon MM ON Moon.id = MM.moon_id
+			                          INNER JOIN Mission M ON MM.mission_id = M.id
+			                          WHERE Moon.id = ?");
+		$stmt->bind_param("i", $_GET['moon']);
+		$stmt->execute();
+		$name_out = NULL;
+		$stmt->bind_result($name_out);
+		while($stmt->fetch()){
+			$temp = array("name" => $name_out);
+			array_push($Mi_list, $temp);
+		}
+		array_push($return, $Mi_list);
+		$stmt->close();
+
+	echo json_encode($return);  //Successful return
+	die();
+    }
 }
 ?>
