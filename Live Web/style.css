@@ -1,0 +1,8 @@
+.top_list, .detail_list {float: left;
+	       				 margin: 3px;}
+table, td, th {border: 2px solid gray;}
+tbody>tr>th {font-weight: normal;
+	         font-style: italic;
+             text-align: center;}
+
+div, p {clear: both;}
