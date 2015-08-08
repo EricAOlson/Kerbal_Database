@@ -6,7 +6,7 @@ th {text-align: center;
     font-weight: bold;}
 tfoot {font-size: .6em;
        text-align: center;}
-div:not(.form):not(.mission_action), p, hr {clear: both;}
+div:not(.form):not(.mission_action):not(.mission_data), p, hr {clear: both;}
 hr {height: 4px;
     background-color: black;}
 p {margin: 3px;}
@@ -29,7 +29,7 @@ label {display: inline-block;
        text-align: right;}
 button {background-color: red;
         font-weight: bold;}
-.form>div>button {width: 135px;
+div>button {width: 135px;
 	                margin-left: 146px;
                   background-color: green;
                   font-weight: bold;}
@@ -38,5 +38,11 @@ button {background-color: red;
 /* Mission Area Styling */
 .mission_action {float: left;}
 h4 {margin-bottom: 4px;}
+#mission_box {border: 1px solid black;
+              margin: 3px;
+              padding: 3px;}
+.mission_data {border: 1px solid black;
+               float: left;
+               margin: 3px;}
 
 

@@ -8,6 +8,7 @@
   <script src="kerbal.js"></script>
   <script src="kerbal_adds.js"></script>
   <script src="kerbal_detail.js"></script>
+  <script src="kerbal_mission.js"></script>
   </head>
   <body>
   	<p>This website allows you to utilize a kerbal database ...</p>
@@ -16,7 +17,7 @@
   			<tr><th>Kerbals:</tr>
   		</thead>
   		<tbody>
-  			<!-- Intentionally left blank, will be populated by draw_kerbal() -->
+  			<!-- Intentionally left blank, will be populated by draw_toplist('kerbal') -->
   		</tbody>
   	</table>
   	<table class="top_list" id="ship_list">
@@ -24,7 +25,7 @@
   			<tr><th>Ships:</tr>
   		</thead>
   		<tbody>
-  			<!-- Intentionally left blank, will be populated by draw_ship() -->
+  			<!-- Intentionally left blank, will be populated by draw_toplist('ship') -->
   		</tbody>
   	</table>
   	<table class="top_list" id="planet_list">
@@ -32,7 +33,7 @@
   			<tr><th>Planets:</tr>
   		</thead>
   		<tbody>
-  			<!-- Intentionally left blank, will be populated by draw_planet() -->
+  			<!-- Intentionally left blank, will be populated by draw_toplist('planet') -->
   		</tbody>
   	</table>
   	<table class="top_list" id="moon_list">
@@ -40,12 +41,13 @@
   			<tr><th>Moons:</tr>
   		</thead>
   		<tbody>
-  			<!-- Intentionally left blank, will be populated by draw_moon() -->
+  			<!-- Intentionally left blank, will be populated by draw_toplist('moon') -->
   		</tbody>
   	</table>
     <hr>
   	<p>And here is the Detailed Information:</p>
-  	<div id="detail_div"></div>
+  	  <!-- Following div intionally blank, will be populated based on user selected choices. -->
+    <div id="detail_div"></div>
     <hr>
   	<p>And here you can add the basics stuff:</p>
   	<div id="adds">
@@ -118,19 +120,19 @@
         <h3>Add a Planet</h3>
         <div>
           <label for="name">Name:</label>
-          <input type="text" required name="name" id="add_planet_name"/>
+          <input type="text" name="name" id="add_planet_name"/>
         </div>
         <div>
           <label for="radius">Radius(km):</label>
-          <input type="number" step="0.001" required name="radius" id="add_planet_radius"/>
+          <input type="number" step="0.001" name="radius" id="add_planet_radius"/>
         </div>
         <div>
           <label for="inclination">Inclination(deg):</label>
-          <input type="number" step="0.001" required name="inclination" id="add_planet_inclination"/>
+          <input type="number" step="0.001" name="inclination" id="add_planet_inclination"/>
         </div>
         <div>
           <label for="gravity">Gravity(m/s^2):</label>
-          <input type="number" step="0.001" required name="gravity" id="add_planet_gravity"/>
+          <input type="number" step="0.001" name="gravity" id="add_planet_gravity"/>
         </div>
         <div>
           <label for="atmosphere">Atmosphere:</label>
@@ -178,15 +180,15 @@
     <p>And here you can add/delete/update missions:</p>
     <h4> Mission Action: </h4>
     <div class='mission_action'>
-      <input type='radio' name='mission_action' value='add'>Add
+      <input type='radio' name='mission_action' value='add' checked onclick='mission_add_stage();'>Add
     </div>
     <div class='mission_action'>
-      <input type='radio' name='mission_action' value='delete'>Delete
+      <input type='radio' name='mission_action' value='delete' onclick='mission_delete_stage();'>Delete
     </div>
     <div class='mission_action'>
-      <input type='radio' name='mission_action' value='update'>Update
+      <input type='radio' name='mission_action' value='update' onclick='mission_update_stage();'>Update
     </div>
-
-
+    <!--  Below Div intentionally left blank, will be populated based on radio button selection above. -->
+    <div id="mission_box"></div>
   </body>
 </html>

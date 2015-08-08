@@ -52,7 +52,6 @@ if (isset($_GET['req']) && ($_GET['req'] == "add_kerbal")){
 		$stmt->execute();
 		$stmt->close();
 	}
-	echo "Successful add.";
 	die();
 }
 
@@ -168,6 +167,27 @@ if (isset($_GET['req']) && ($_GET['req'] == "moon_list")){
 	}
 	$stmt->close();
 	echo json_encode($moons);  //Successful return
+	die();
+}
+
+
+
+//Retrieves an array of missions from the database.
+if (isset($_GET['req']) && ($_GET['req'] == "mission_list")){
+	$missions = array();
+    $stmt = $kerbalsqli->prepare("SELECT id, name FROM Mission");
+    $stmt->execute();
+    $id_out = NULL;
+    $name_out = NULL;
+	$stmt->bind_result($id_out, $name_out);
+	while($stmt->fetch()){
+		$temp = array(
+			"id" => $id_out,
+			"name" => $name_out);
+		array_push($missions, $temp);
+	}
+	$stmt->close();
+	echo json_encode($missions);  //Successful return
 	die();
 }
 

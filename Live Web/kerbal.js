@@ -109,4 +109,5 @@ window.onload = function() {
 	draw_toplist('ship');
 	draw_toplist('planet');
 	draw_toplist('moon');
+  mission_add_stage();
 }
