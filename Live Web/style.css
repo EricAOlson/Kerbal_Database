@@ -1,31 +1,42 @@
-.top_list, .detail_list, form {float: left;
-	       				 margin: 3px;}
+/*  Basic Tables Display/Detail/Delete Styling.  */
+.top_list, .detail_list {float: left;
+	       				         margin: 3px;}
 table, td, th {border: 2px solid gray;}
-tbody>tr>th {font-weight: normal;
-	         font-style: italic;
-             text-align: center;}
+th {text-align: center;
+    font-weight: bold;}
+tfoot {font-size: .6em;
+       text-align: center;}
+div:not(.form):not(.mission_action), p, hr {clear: both;}
+hr {height: 4px;
+    background-color: black;}
+p {margin: 3px;}
 
-div, p {clear: both;}
-
-
-
-
-
-
-/* Forms Styling.  Some of this styling leveraged from:
+/* Basic Add styling.  Some of this styling leveraged from:
    https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Forms/My_first_HTML_form */
 h3 {text-align: center;
     font-style: bold;
     margin-top: 2px;
     margin-bottom: 5px;}
-form {margin-top: 10px;
-	  width: 260px;
-	  border: 1px solid black;
-      padding: 3px;}
-form div+div {margin-top: .25em;}
+.form {margin-top: 10px;
+       margin-right: 6px;
+	     width: 290px;
+	     border: 1px solid black;
+       padding: 3px;
+       float: left;}
+.form div+div {margin-top: .25em;}
 label {display: inline-block;
-       width: 70px;
+       width: 105px;
        text-align: right;}
-input[type="radio"] {margin-left: 125px;}
-input[type="submit"] {width: 100px;
-	                  margin-left: 146px;}
+button {background-color: red;
+        font-weight: bold;}
+.form>div>button {width: 135px;
+	                margin-left: 146px;
+                  background-color: green;
+                  font-weight: bold;}
+
+
+/* Mission Area Styling */
+.mission_action {float: left;}
+h4 {margin-bottom: 4px;}
+
+

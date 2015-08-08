@@ -1,0 +1,192 @@
+<!-- Eric Olson - CS340_400 Final Project -->
+<!doctype html>
+<html>
+  <head>
+  <meta charset="UTF-8">
+  <title>Kerbal Database</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="kerbal.js"></script>
+  <script src="kerbal_adds.js"></script>
+  <script src="kerbal_detail.js"></script>
+  </head>
+  <body>
+  	<p>This website allows you to utilize a kerbal database ...</p>
+  	<table class="top_list" id="kerbal_list">
+  		<thead>
+  			<tr><th>Kerbals:</tr>
+  		</thead>
+  		<tbody>
+  			<!-- Intentionally left blank, will be populated by draw_kerbal() -->
+  		</tbody>
+  	</table>
+  	<table class="top_list" id="ship_list">
+  		<thead>
+  			<tr><th>Ships:</tr>
+  		</thead>
+  		<tbody>
+  			<!-- Intentionally left blank, will be populated by draw_ship() -->
+  		</tbody>
+  	</table>
+  	<table class="top_list" id="planet_list">
+  		<thead>
+  			<tr><th>Planets:</tr>
+  		</thead>
+  		<tbody>
+  			<!-- Intentionally left blank, will be populated by draw_planet() -->
+  		</tbody>
+  	</table>
+  	<table class="top_list" id="moon_list">
+  		<thead>
+  			<tr><th>Moons:</tr>
+  		</thead>
+  		<tbody>
+  			<!-- Intentionally left blank, will be populated by draw_moon() -->
+  		</tbody>
+  	</table>
+    <hr>
+  	<p>And here is the Detailed Information:</p>
+  	<div id="detail_div"></div>
+    <hr>
+  	<p>And here you can add the basics stuff:</p>
+  	<div id="adds">
+  		<div class='form'>
+  			<h3>Add a Kerbal</h3>
+  			<div>
+    			<label for="name">Name:</label>
+    			<input type="text" required name="name" id="add_kerbal_name"/>
+    		</div>
+    		<div>
+    			<label for="courage">Courage:</label>
+    			<select name="courage" id="add_kerbal_courage">
+    				<option value="1">1</option>
+    				<option value="2">2</option>
+    				<option value="3">3</option>
+    				<option value="4">4</option>
+    				<option value="5">5</option>
+    				<option value="6">6</option>
+    				<option value="7">7</option>
+    				<option value="8">8</option>
+    				<option value="9">9</option>
+    				<option value="10">10</option>
+    			</select>
+    		</div>
+    		<div>
+    			<label for="stupidity">Stupidity:</label>
+    			<select name="stupidity" id="add_kerbal_stupidity">
+    				<option value="1">1</option>
+    				<option value="2">2</option>
+    				<option value="3">3</option>
+    				<option value="4">4</option>
+    				<option value="5">5</option>
+    				<option value="6">6</option>
+    				<option value="7">7</option>
+    				<option value="8">8</option>
+    				<option value="9">9</option>
+    				<option value="10">10</option>
+    			</select>
+    		</div>
+    		<div>
+    			<button onclick="add_kerbal();">Submit</button>
+    		</div>
+    	</div>
+    	<div class='form'>
+  			<h3>Add a Ship</h3>
+  			<div>
+    			<label for="name">Name:</label>
+    			<input type="text" required name="name" id="add_ship_name"/>
+    		</div>
+    		<div>
+    			<label for="seats">Seats:</label>
+    			<input type="number" required name="seats" min="0" max="25"id="add_ship_seats"/>
+    		</div>
+    		<div>
+    			<label for="stages">Stages:</label>
+    			<input type="number" required name="stages" min="0" max="50" id="add_ship_stages"/>
+    		</div>
+    		<div>
+    			<label for="lander">Lander:</label>
+    			<select name="lander" id="add_ship_lander">
+    				<option value="1">Yes</option>
+    				<option value="0">No</option>
+    			</select>
+    		</div>
+    		<div>
+    			<button onclick="add_ship();">Submit</button>
+    		</div>
+    	</div>
+      <div class='form'>
+        <h3>Add a Planet</h3>
+        <div>
+          <label for="name">Name:</label>
+          <input type="text" required name="name" id="add_planet_name"/>
+        </div>
+        <div>
+          <label for="radius">Radius(km):</label>
+          <input type="number" step="0.001" required name="radius" id="add_planet_radius"/>
+        </div>
+        <div>
+          <label for="inclination">Inclination(deg):</label>
+          <input type="number" step="0.001" required name="inclination" id="add_planet_inclination"/>
+        </div>
+        <div>
+          <label for="gravity">Gravity(m/s^2):</label>
+          <input type="number" step="0.001" required name="gravity" id="add_planet_gravity"/>
+        </div>
+        <div>
+          <label for="atmosphere">Atmosphere:</label>
+          <select name="atmosphere" id="add_planet_atmosphere">
+            <option value="1">Present</option>
+            <option value="0">None</option>
+          </select>
+        </div>
+        <div>
+          <button onclick="add_planet();">Submit</button>
+        </div>
+      </div>
+      <div class='form'>
+        <h3>Add a Moon</h3>
+        <div>
+          <label for="name">Name:</label>
+          <input type="text" required name="name" id="add_moon_name"/>
+        </div>
+        <div>
+          <label for="radius">Radius(km):</label>
+          <input type="number" step="0.001" required name="radius" id="add_moon_radius"/>
+        </div>
+        <div>
+          <label for="gravity">Gravity(m/s^2):</label>
+          <input type="number" step="0.001" required name="gravity" id="add_moon_gravity"/>
+        </div>
+        <div>
+          <label for="atmosphere">Atmosphere:</label>
+          <select name="atmosphere" id="add_moon_atmosphere">
+            <option value="1">Present</option>
+            <option value="0">None</option>
+          </select>
+        </div>
+        <div>
+          <label for="orbits">Orbits:</label>
+          <!-- Following Select will be populated onload with planet list, as well as upon planet add/delete -->
+          <select name="orbits" id="add_moon_orbits"></select>
+        </div>
+        <div>
+          <button onclick="add_moon();">Submit</button>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <p>And here you can add/delete/update missions:</p>
+    <h4> Mission Action: </h4>
+    <div class='mission_action'>
+      <input type='radio' name='mission_action' value='add'>Add
+    </div>
+    <div class='mission_action'>
+      <input type='radio' name='mission_action' value='delete'>Delete
+    </div>
+    <div class='mission_action'>
+      <input type='radio' name='mission_action' value='update'>Update
+    </div>
+
+
+  </body>
+</html>

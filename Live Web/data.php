@@ -31,7 +31,19 @@ if (isset($_GET['req']) && ($_GET['req'] == "kerbal_list")){
 }
 
 
-//Adds a new kerbals to the database.
+//Deletes a kerbal from the database.
+if (isset($_GET['req']) && ($_GET['req'] == "delete_kerbal")){
+	if (isset($_GET['id'])){
+		$stmt = $kerbalsqli->prepare("DELETE FROM Kerbal WHERE id=?");
+		$stmt->bind_param("i", $_GET['id']);
+		$stmt->execute();
+		$stmt->close();
+	}
+	die();
+}
+
+
+//Adds a kerbal to the database.
 if (isset($_GET['req']) && ($_GET['req'] == "add_kerbal")){
 	if (isset($_GET['name']) && isset($_GET['courage']) && isset($_GET['stupidity'])){
 		$stmt = $kerbalsqli->prepare("INSERT INTO Kerbal (name, courage, stupidity) 
@@ -40,6 +52,7 @@ if (isset($_GET['req']) && ($_GET['req'] == "add_kerbal")){
 		$stmt->execute();
 		$stmt->close();
 	}
+	echo "Successful add.";
 	die();
 }
 
@@ -76,6 +89,20 @@ if (isset($_GET['req']) && ($_GET['req'] == "add_ship")){
 	die();
 }
 
+
+//Deletes a ship from the database.
+if (isset($_GET['req']) && ($_GET['req'] == "delete_ship")){
+	if (isset($_GET['id'])){
+		$stmt = $kerbalsqli->prepare("DELETE FROM Ship WHERE id=?");
+		$stmt->bind_param("i", $_GET['id']);
+		$stmt->execute();
+		$stmt->close();
+	}
+	die();
+}
+
+
+
 //Retrieves an array of planets from the database.
 if (isset($_GET['req']) && ($_GET['req'] == "planet_list")){
 	$planets = array();
@@ -95,6 +122,36 @@ if (isset($_GET['req']) && ($_GET['req'] == "planet_list")){
 	die();
 }
 
+
+
+//Adds a new planets to the database.
+if (isset($_GET['req']) && ($_GET['req'] == "add_planet")){
+	if (isset($_GET['name']) && isset($_GET['radius']) && isset($_GET['inclination']) && isset($_GET['gravity']) && isset($_GET['atmosphere'])){
+		$stmt = $kerbalsqli->prepare("INSERT INTO Planet (name, radius, inclination, gravity, atmosphere) 
+									  VALUES (?, ?, ?, ?, ?)");
+		$stmt->bind_param("sdddi", $_GET['name'], $_GET['radius'], $_GET['inclination'], $_GET['gravity'], $_GET['atmosphere']);
+		$stmt->execute();
+		$stmt->close();
+	}
+	die();
+}
+
+
+
+//Deletes a planet from the database.
+if (isset($_GET['req']) && ($_GET['req'] == "delete_planet")){
+	if (isset($_GET['id'])){
+		$stmt = $kerbalsqli->prepare("DELETE FROM Planet WHERE id=?");
+		$stmt->bind_param("i", $_GET['id']);
+		$stmt->execute();
+		$stmt->close();
+	}
+	die();
+}
+
+
+
+
 //Retrieves an array of moons from the database.
 if (isset($_GET['req']) && ($_GET['req'] == "moon_list")){
 	$moons = array();
@@ -113,6 +170,37 @@ if (isset($_GET['req']) && ($_GET['req'] == "moon_list")){
 	echo json_encode($moons);  //Successful return
 	die();
 }
+
+
+
+//Adds a new moon to the database.
+if (isset($_GET['req']) && ($_GET['req'] == "add_moon")){
+	if (isset($_GET['name']) && isset($_GET['radius']) && isset($_GET['gravity']) && isset($_GET['atmosphere']) && isset($_GET['orbits'])){
+		$stmt = $kerbalsqli->prepare("INSERT INTO Moon (name, radius, gravity, atmosphere, orbits) 
+									  VALUES (?, ?, ?, ?, ?)");
+		$stmt->bind_param("sddis", $_GET['name'], $_GET['radius'], $_GET['gravity'], $_GET['atmosphere'], $_GET['orbits']);
+		$stmt->execute();
+		$stmt->close();
+	}
+	die();
+}
+
+
+
+
+//Deletes a planet from the database.
+if (isset($_GET['req']) && ($_GET['req'] == "delete_moon")){
+	if (isset($_GET['id'])){
+		$stmt = $kerbalsqli->prepare("DELETE FROM Moon WHERE id=?");
+		$stmt->bind_param("i", $_GET['id']);
+		$stmt->execute();
+		$stmt->close();
+	}
+	die();
+}
+
+
+
 
 
 //Retrieves an array of detailed information for a Kerbal.
