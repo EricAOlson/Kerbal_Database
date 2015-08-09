@@ -10,6 +10,7 @@ DROP TABLE IF EXISTS Mission_Planet;
 DROP TABLE IF EXISTS Mission_Moon;
 SET foreign_key_checks = 1;
 
+-- Creation of Tables, establishing primary and foreign keys.  All deletes cascascade.
 CREATE TABLE Kerbal(
 id int AUTO_INCREMENT PRIMARY KEY,
 name varchar(255) NOT NULL,
@@ -63,7 +64,6 @@ FOREIGN KEY (mission_id) REFERENCES Mission(id) ON DELETE CASCADE
 CREATE TABLE Mission_Planet(
 mission_id int,
 planet_id int,
-result varchar(7),
 PRIMARY KEY (mission_id, planet_id),
 FOREIGN KEY (mission_id) REFERENCES Mission(id) ON DELETE CASCADE,
 FOREIGN KEY (planet_id) REFERENCES Planet(id) ON DELETE CASCADE
@@ -72,42 +72,57 @@ FOREIGN KEY (planet_id) REFERENCES Planet(id) ON DELETE CASCADE
 CREATE TABLE Mission_Moon(
 mission_id int,
 moon_id int,
-result varchar(7),
 PRIMARY KEY (mission_id, moon_id),
 FOREIGN KEY (mission_id) REFERENCES Mission(id) ON DELETE CASCADE,
 FOREIGN KEY (moon_id) REFERENCES Moon(id) ON DELETE CASCADE
 )ENGINE = INNODB;
 
--- Temp Data for display
+-- Populated some initial data for viewing, can be deleted/changed via GUI
 INSERT INTO Kerbal(name, courage, stupidity) VALUES
-('jebadiah',7,9),
-('Jesebel',8,9);
+('Jebediah Kerman', 4, 9),
+('Bob Kerman', 8, 2),
+('Buzz Aldrin', 8, 4),
+('Neil Armstrong', 9, 1);
 
 INSERT INTO Ship(name, seats, stages, lander) VALUES
-('Falcon', 2, 3, TRUE),
-('Spud', 0, 2, FALSE),
-('Eagle', 2, 4, TRUE);
+('Falcon', 2, 5, FALSE),
+('Eagle', 2, 4, TRUE),
+('Sparrow', 2, 2, TRUE);
 
 INSERT INTO Mission(name, first_launch_year, ship_id) VALUES
-('Apollo',2007, 3),
-('Sputnik',2010, 2);
+('Kerbite I', 2002, 1),
+('Apollo XI', 1969, 2),
+('Unity II', 204, 3);
 
 INSERT INTO Kerbal_Mission(kerbal_id, mission_id) VALUES
-(1,2),
 (1,1),
-(2,1);
+(2,1),
+(2,3),
+(3,2),
+(4,2),
+(4,3);
 
 INSERT INTO Planet(name, radius, inclination, gravity, atmosphere) VALUES
-('Kerbin', 44.5, 7.4, 22.3, TRUE),
-('Uolo', 12, 4.4, 2, FALSE);
+('Kerbin', 600, 0, 9.81, TRUE),
+('Eve', 700, 2.1, 16.7, TRUE),
+('Jool', 6000, 1.3, 7.85, TRUE),
+('Duna', 320, 0.06, 2.94, TRUE);
 
 INSERT INTO Moon(name, radius, gravity, atmosphere, orbits) VALUES
-('Mun', 44.5, 22.3, TRUE, 1),
-('Minmus', 12, 2, FALSE, 1);
+('Mun', 200, 1.63, FALSE, 1),
+('Gilly', 13, 0.049, FALSE, 2),
+('Laythe', 500, 7.85, TRUE, 3),
+('Tylo', 600, 7.85, FALSE, 3),
+('Bop', 65, 0.589, FALSE, 3),
+('Ike', 130, 1.1, FALSE, 4);
 
-INSERT INTO Mission_Planet(mission_id, planet_id, result) VALUES
-(2, 1, 'Success');
+INSERT INTO Mission_Planet(mission_id, planet_id) VALUES
+(1, 2),
+(1, 3),
+(3, 4);
 
-INSERT INTO Mission_Moon(mission_id, moon_id, result) VALUES
-(1, 1, 'Success'),
-(1, 2, 'Failure');
+INSERT INTO Mission_Moon(mission_id, moon_id) VALUES
+(1, 4),
+(1, 5),
+(2, 1),
+(3, 6);

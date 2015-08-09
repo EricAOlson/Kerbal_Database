@@ -1,17 +1,18 @@
-/*  Basic Tables Display/Detail/Delete Styling.  */
+/*  Basic Styling for Top Lists, and Detail Section.  */
 .top_list, .detail_list {float: left;
 	       				         margin: 3px;}
 table, td, th {border: 2px solid gray;}
 th {text-align: center;
     font-weight: bold;}
 tfoot {font-size: .6em;
-       text-align: center;}
+       text-align: center;
+       color: red;}
 div:not(.form):not(.mission_action):not(.mission_data), p, hr {clear: both;}
-hr {height: 4px;
+hr {height: 8px;
     background-color: black;}
 p {margin: 3px;}
 
-/* Basic Add styling.  Some of this styling leveraged from:
+/* Basic Add Section styling.  Some of this styling leveraged from:
    https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Forms/My_first_HTML_form */
 h3 {text-align: center;
     font-style: bold;
@@ -29,10 +30,10 @@ label {display: inline-block;
        text-align: right;}
 button {background-color: red;
         font-weight: bold;}
-div>button {width: 135px;
-	                margin-left: 146px;
-                  background-color: green;
-                  font-weight: bold;}
+.form>div>button, #add_submit {width: 135px;
+	                             margin-left: 146px;
+                               background-color: green;
+                               font-weight: bold;}
 
 
 /* Mission Area Styling */
@@ -44,5 +45,9 @@ h4 {margin-bottom: 4px;}
 .mission_data {border: 1px solid black;
                float: left;
                margin: 3px;}
+#delete_button {background-color: red;}
+#head {font-weight: bold;}
+
+
 
 

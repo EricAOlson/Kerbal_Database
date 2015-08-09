@@ -1,5 +1,8 @@
+/*** File provides 4 similiar functions to build the detail view for all basic entities ***/
+
 //Detailed Form Population for Kerbals
 function detail_kerbal(id){
+  id = encodeURIComponent(id);
   var new_div = document.getElementById("detail_div"),
       temp_table,
       new_table,
@@ -10,7 +13,7 @@ function detail_kerbal(id){
       url,
       response = [];
 
-  //Makes request to SQL for Kerbal Details.
+  //Makes request to PHP for Kerbal Details.
   request = new XMLHttpRequest();
   if (!request) {
     throw 'HttpRequest object not created.';
@@ -20,7 +23,7 @@ function detail_kerbal(id){
   request.send();
   request.onreadystatechange = function () {
     if (this.readyState === 4) {
-      response = JSON.parse(this.responseText);
+      response = JSON.parse(this.responseText);  //Parses array with all required details.
 
       //Deletes any current data in detail section.
       while(new_div.childNodes.length > 0){
@@ -28,7 +31,7 @@ function detail_kerbal(id){
         temp_table.parentNode.removeChild(temp_table);
       }
 
-      //Provides Kerbal Data
+      //Adds Kerbal Detail Data
       new_table = document.createElement("table");
       new_table.setAttribute("class", "detail_list");
       //Headers
@@ -122,7 +125,7 @@ function detail_kerbal(id){
       new_row.appendChild(new_cell);
       new_cell = document.createElement("td");
       new_table.appendChild(new_row);
-      //Ships
+      //Missions
       for (x = 0; x < response[2].length; x++){
         new_row = document.createElement("tr");
         new_cell = document.createElement("td");
@@ -133,7 +136,7 @@ function detail_kerbal(id){
       }
       new_div.appendChild(new_table);
 
-      //List Missions Assigned
+      //List Planets Visited
       new_table = document.createElement("table");
       new_table.setAttribute("class", "detail_list");
       //Headers
@@ -144,7 +147,7 @@ function detail_kerbal(id){
       new_row.appendChild(new_cell);
       new_cell = document.createElement("td");
       new_table.appendChild(new_row);
-      //Ships
+      //Planets
       for (x = 0; x < response[3].length; x++){
         new_row = document.createElement("tr");
         new_cell = document.createElement("td");
@@ -155,7 +158,7 @@ function detail_kerbal(id){
       }
       new_div.appendChild(new_table);
 
-      //List Missions Assigned
+      //List Moons Visited
       new_table = document.createElement("table");
       new_table.setAttribute("class", "detail_list");
       //Headers
@@ -184,6 +187,7 @@ function detail_kerbal(id){
 
 //Detailed Form Population for Ships
 function detail_ship(id){
+  id = encodeURIComponent(id);
   var new_div = document.getElementById("detail_div"),
       temp_table,
       new_table,
@@ -193,7 +197,7 @@ function detail_ship(id){
       url,
       response = [];
 
-  //Makes request to SQL for Ship Details.
+  //Makes request to PHP for Ship Details.
   request = new XMLHttpRequest();
   if (!request) {
     throw 'HttpRequest object not created.';
@@ -203,7 +207,7 @@ function detail_ship(id){
   request.send();
   request.onreadystatechange = function () {
     if (this.readyState === 4) {
-      response = JSON.parse(this.responseText);
+      response = JSON.parse(this.responseText);  //Parses all requested data.
 
       //Deletes any current data in detail section.
       while(new_div.childNodes.length > 0){
@@ -258,7 +262,7 @@ function detail_ship(id){
       new_cell.appendChild(text);
       new_row.appendChild(new_cell);
       new_table.appendChild(new_row);
-      //Stages
+      //Lander
       new_row = document.createElement("tr");
       new_cell = document.createElement("td");
       text = document.createTextNode("Lander");
@@ -316,7 +320,7 @@ function detail_ship(id){
       new_row.appendChild(new_cell);
       new_cell = document.createElement("td");
       new_table.appendChild(new_row);
-      //Ships
+      //Missions
       for (x = 0; x < response[2].length; x++){
         new_row = document.createElement("tr");
         new_cell = document.createElement("td");
@@ -327,7 +331,7 @@ function detail_ship(id){
       }
       new_div.appendChild(new_table);
 
-      //List Missions Assigned
+      //List Planets Visited
       new_table = document.createElement("table");
       new_table.setAttribute("class", "detail_list");
       //Headers
@@ -338,7 +342,7 @@ function detail_ship(id){
       new_row.appendChild(new_cell);
       new_cell = document.createElement("td");
       new_table.appendChild(new_row);
-      //Ships
+      //Planets
       for (x = 0; x < response[3].length; x++){
         new_row = document.createElement("tr");
         new_cell = document.createElement("td");
@@ -349,7 +353,7 @@ function detail_ship(id){
       }
       new_div.appendChild(new_table);
 
-      //List Missions Assigned
+      //List Moons Vistied
       new_table = document.createElement("table");
       new_table.setAttribute("class", "detail_list");
       //Headers
@@ -360,7 +364,7 @@ function detail_ship(id){
       new_row.appendChild(new_cell);
       new_cell = document.createElement("td");
       new_table.appendChild(new_row);
-      //Ships
+      //Moons
       for (x = 0; x < response[4].length; x++){
         new_row = document.createElement("tr");
         new_cell = document.createElement("td");
@@ -378,6 +382,7 @@ function detail_ship(id){
 
 //Detailed Form Population for Planets
 function detail_planet(id){
+  id = encodeURIComponent(id);
   var new_div = document.getElementById("detail_div"),
       temp_table,
       new_table,
@@ -387,7 +392,7 @@ function detail_planet(id){
       url,
       response = [];
 
-  //Makes request to SQL for Planet Details.
+  //Makes request to PHP for Planet Details.
   request = new XMLHttpRequest();
   if (!request) {
     throw 'HttpRequest object not created.';
@@ -397,7 +402,7 @@ function detail_planet(id){
   request.send();
   request.onreadystatechange = function () {
     if (this.readyState === 4) {
-      response = JSON.parse(this.responseText);
+      response = JSON.parse(this.responseText);  //Parses all requested data.
 
       //Deletes any current data in detail section.
       while(new_div.childNodes.length > 0){
@@ -592,6 +597,7 @@ function detail_planet(id){
 
 //Detailed Form Population for Moons
 function detail_moon(id){
+  id = encodeURIComponent(id);
   var new_div = document.getElementById("detail_div"),
       temp_table,
       new_table,
@@ -601,7 +607,7 @@ function detail_moon(id){
       url,
       response = [];
 
-  //Makes request to SQL for Planet Details.
+  //Makes request to PHP for Planet Details.
   request = new XMLHttpRequest();
   if (!request) {
     throw 'HttpRequest object not created.';
@@ -611,7 +617,7 @@ function detail_moon(id){
   request.send();
   request.onreadystatechange = function () {
     if (this.readyState === 4) {
-      response = JSON.parse(this.responseText);
+      response = JSON.parse(this.responseText);  //Parses all requested data.
 
       //Deletes any current data in detail section.
       while(new_div.childNodes.length > 0){
@@ -619,7 +625,7 @@ function detail_moon(id){
         temp_table.parentNode.removeChild(temp_table);
       }
 
-      //Provides Planet Data
+      //Provides Planet Detail Data
       new_table = document.createElement("table");
       new_table.setAttribute("class", "detail_list");
       //Headers

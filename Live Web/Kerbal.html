@@ -11,7 +11,9 @@
   <script src="kerbal_mission.js"></script>
   </head>
   <body>
-  	<p>This website allows you to utilize a kerbal database ...</p>
+  	<p>This website serves as a front end GUI for a database consisting of data pulled from the Kerbal Space Program video game.  In the game a race of 'aliens' called Kerbals develop a space program, build ships, and explore their solar system. This database houses 5 entities.  4 basic entities are Kerbals(the astronauts), Ships, Planets and Moons.  The 5th entity is Missions, which can be joined to each of the other 4 creating a complex interconnectivity.</p>
+    <hr>
+    <p>The 4 basic entities are listed below.  Click on any of them to populate the detail section that follows.</p>
   	<table class="top_list" id="kerbal_list">
   		<thead>
   			<tr><th>Kerbals:</tr>
@@ -45,11 +47,11 @@
   		</tbody>
   	</table>
     <hr>
-  	<p>And here is the Detailed Information:</p>
+  	<p>Once an entity is selected above, detail information will populate in this section.  You can also delete a individual entity here.</p>
   	  <!-- Following div intionally blank, will be populated based on user selected choices. -->
     <div id="detail_div"></div>
     <hr>
-  	<p>And here you can add the basics stuff:</p>
+  	<p>New basic entities can be added here, and will update the tables above.</p>
   	<div id="adds">
   		<div class='form'>
   			<h3>Add a Kerbal</h3>
@@ -177,16 +179,16 @@
       </div>
     </div>
     <hr>
-    <p>And here you can add/delete/update missions:</p>
+    <p>This is the Missions section.  Missions are the heart of the Kerbal database, and tie all the other entities together.  Here you can Add, Delete, or Update(in real time) missions.  Changes here will be reflected in the tables above.</p>
     <h4> Mission Action: </h4>
     <div class='mission_action'>
-      <input type='radio' name='mission_action' value='add' checked onclick='mission_add_stage();'>Add
+      <input type='radio' name='mission_action' value='add' id="mission_header_add" onclick='mission_add_stage();'>Add
     </div>
     <div class='mission_action'>
-      <input type='radio' name='mission_action' value='delete' onclick='mission_delete_stage();'>Delete
+      <input type='radio' name='mission_action' value='delete' id="mission_header_delete" onclick='mission_delete_stage();'>Delete
     </div>
     <div class='mission_action'>
-      <input type='radio' name='mission_action' value='update' onclick='mission_update_stage();'>Update
+      <input type='radio' name='mission_action' value='update' id="mission_header_update" onclick='mission_update_stage();'>Update
     </div>
     <!--  Below Div intentionally left blank, will be populated based on radio button selection above. -->
     <div id="mission_box"></div>
